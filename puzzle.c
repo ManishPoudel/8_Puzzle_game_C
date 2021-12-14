@@ -14,9 +14,8 @@ MAX->max size.
 #define LEFT 3
 #define RIGHT 4
 #define MAX 5
-#define NXN 3
 
-int sizes;
+int sizes=0;
 
 struct position{
     int x;
@@ -25,7 +24,6 @@ struct position{
 
 struct position space;
 struct position *ptr=&space;
-
 char puzz[MAX][MAX];
 
 /* char puzz[NXN][NXN]={{'1','2','3',},
@@ -43,7 +41,8 @@ void makepuzzle();
 
 int main(){ 
     printf("Enter your squire puzzles size: N By N :\n");
-    printf("Max is 5.\n");
+    printf("Max is 4.\n");
+    fflush(stdin);
     scanf("%d",&sizes);
     makepuzzle();
     init();
@@ -65,21 +64,21 @@ int main(){
 
 void makepuzzle(){
     char alp='a';
-    for(int i=0;i<sizes-1;i++){
-        for(int j=0;j<sizes-1;j++){
+    for(int i=0;i<sizes;i++){
+        for(int j=0;j<sizes;j++){
             puzz[i][j]=alp++;
         }
     }
-    puzz[sizes][sizes]=' ';
-    ptr->x=sizes;
-    ptr->y=sizes;
+    puzz[sizes-1][sizes-1]=' ';
+    ptr->x=sizes-1;
+    ptr->y=sizes-1;
     return;
 }
 
 
 void moverandom(){
-    for(int i=0;i<(11*sizes);i++){
-        int m=(rand()%(sizes+1))+1;
+    for(int i=0;i<60;i++){
+        int m=(rand()%(4))+1;
         move(m);
     }
     return;
@@ -92,10 +91,14 @@ void init(){
 
 int gamecheck(){
     char ch='a';
-    for(int i=0;i<NXN && ch<'p';i++){
-        for(int j=0;j<NXN && ch<'p';j++){   //needs modifications.
+    for(int i=0,k=1;i<sizes;i++){
+        for(int j=0;j<sizes;j++){
+            k++;
             if(puzz[i][j]==ch){
                 ch++;
+                if(k==16){
+                    ch=' ';
+                }
             }else{
                 return 0;
             }
@@ -117,7 +120,7 @@ void move(int dir){
         ptr->y-=1;
         break;
     case 1 :
-        if((ptr->y)+1 >sizes){return;}
+        if((ptr->y)+1 >sizes-1){return;}
         temp=puzz[ptr->y+1][ptr->x];
         puzz[(ptr->y)+1][ptr->x]=puzz[ptr->y][ptr->x];
         puzz[ptr->y][ptr->x]=temp;
@@ -131,7 +134,7 @@ void move(int dir){
         ptr->x-=1;
         break;
     case 3:
-        if((ptr->x)+1 >sizes){return;}
+        if((ptr->x)+1 >sizes-1){return;}
         temp=puzz[ptr->y][(ptr->x)+1];
         puzz[ptr->y][(ptr->x)+1]=puzz[ptr->y][ptr->x];
         puzz[ptr->y][ptr->x]=temp;
