@@ -121,4 +121,5 @@ void printscrn(){
         printf("\n");
     }
     printf("\n  ****************\n");
+    return;
 }
