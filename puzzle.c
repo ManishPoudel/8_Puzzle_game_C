@@ -1,3 +1,10 @@
+/*
+For now input 4 size(will be imrpoved to do greater size).
+
+REPLACE:
+MAX->max size.
+
+ */
 #include<stdio.h>
 #include<conio.h>
 #include<stdlib.h>
@@ -6,20 +13,24 @@
 #define BACKWARD 2
 #define LEFT 3
 #define RIGHT 4
+#define MAX 5
 #define NXN 3
-#define SI 9
+
+int sizes;
 
 struct position{
     int x;
     int y;
 };
 
-struct position space={2,2};
+struct position space;
 struct position *ptr=&space;
 
-char puzz[NXN][NXN]={{'1','2','3',},
+char puzz[MAX][MAX];
+
+/* char puzz[NXN][NXN]={{'1','2','3',},
                     {'4','5','6',},
-                    {'7','8',' '}};
+                    {'7','8',' '}}; */
 void printscrn();
 int tomove();
 void move(int dir);
@@ -28,8 +39,13 @@ int suffel(struct position space);
 int gamecheck();
 void init();
 void moverandom();
+void makepuzzle();
 
 int main(){ 
+    printf("Enter your squire puzzles size: N By N :\n");
+    printf("Max is 5.\n");
+    scanf("%d",&sizes);
+    makepuzzle();
     init();
     int j=1;
     moverandom();
@@ -47,9 +63,23 @@ int main(){
     return 0; 
 }
 
+void makepuzzle(){
+    char alp='a';
+    for(int i=0;i<sizes-1;i++){
+        for(int j=0;j<sizes-1;j++){
+            puzz[i][j]=alp++;
+        }
+    }
+    puzz[sizes][sizes]=' ';
+    ptr->x=sizes;
+    ptr->y=sizes;
+    return;
+}
+
+
 void moverandom(){
-    for(int i=0;i<(60);i++){
-        int m=(rand()%4)+1;
+    for(int i=0;i<(11*sizes);i++){
+        int m=(rand()%(sizes+1))+1;
         move(m);
     }
     return;
@@ -61,9 +91,9 @@ void init(){
 }
 
 int gamecheck(){
-    char ch='1';
-    for(int i=0;i<NXN && ch<'9';i++){
-        for(int j=0;j<NXN && ch<'9';j++){
+    char ch='a';
+    for(int i=0;i<NXN && ch<'p';i++){
+        for(int j=0;j<NXN && ch<'p';j++){   //needs modifications.
             if(puzz[i][j]==ch){
                 ch++;
             }else{
@@ -87,7 +117,7 @@ void move(int dir){
         ptr->y-=1;
         break;
     case 1 :
-        if((ptr->y)+1 >2){return;}
+        if((ptr->y)+1 >sizes){return;}
         temp=puzz[ptr->y+1][ptr->x];
         puzz[(ptr->y)+1][ptr->x]=puzz[ptr->y][ptr->x];
         puzz[ptr->y][ptr->x]=temp;
@@ -101,7 +131,7 @@ void move(int dir){
         ptr->x-=1;
         break;
     case 3:
-        if((ptr->x)+1 >2){return;}
+        if((ptr->x)+1 >sizes){return;}
         temp=puzz[ptr->y][(ptr->x)+1];
         puzz[ptr->y][(ptr->x)+1]=puzz[ptr->y][ptr->x];
         puzz[ptr->y][ptr->x]=temp;
@@ -144,11 +174,12 @@ int tomove(){
 void printscrn(){
     system("cls");
     printf("\n  ****************\n");
-    for(int i=0;i<NXN;i++){
-        for(int j=0;j<NXN;j++){
+    for(int i=0;i<sizes;i++){
+        for(int j=0;j<sizes;j++){
             printf("    %c ",puzz[i][j]);
         }
         printf("\n");
     }
     printf("\n  ****************\n");
+    return;
 }
