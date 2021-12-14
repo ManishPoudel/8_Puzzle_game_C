@@ -1,49 +1,15 @@
-/*
-For now input 4 size(will be imrpoved to do greater size).
-
-REPLACE:
-MAX->max size.
-
- */
-#include<stdio.h>
-#include<conio.h>
-#include<stdlib.h>
-#include<time.h>
-#define FORWARD 1
-#define BACKWARD 2
-#define LEFT 3
-#define RIGHT 4
-#define MAX 5
-
-int sizes=0;
-
-struct position{
-    int x;
-    int y;
-};
-
-struct position space;
-struct position *ptr=&space;
-char puzz[MAX][MAX];
-
-/* char puzz[NXN][NXN]={{'1','2','3',},
-                    {'4','5','6',},
-                    {'7','8',' '}}; */
-void printscrn();
-int tomove();
-void move(int dir);
-int swap(int y,int x,int y2,int x2);
-int suffel(struct position space);
-int gamecheck();
-void init();
-void moverandom();
-void makepuzzle();
+#include "puzzsup.h"
 
 int main(){ 
     printf("Enter your squire puzzles size: N By N :\n");
-    printf("Max is 4.\n");
+    printf("Minimum 2. Maximum is 5.\n");
     fflush(stdin);
     scanf("%d",&sizes);
+    if(sizes<2 || sizes>5){
+        printf("Invalid option. Press any key.");
+        getch();
+        return 0;
+    }
     makepuzzle();
     init();
     int j=1;
@@ -53,17 +19,19 @@ int main(){
         printscrn();
         j=tomove();
         if(gamecheck()){
-            printf("\n You Won ");
+            printf("\n YOU WON \n");
+            printf("Enter any key twice to exit.");
             break;
         }
     }
+    getch();
     getch();
     getch();
     return 0; 
 }
 
 void makepuzzle(){
-    char alp='a';
+    char alp='A';
     for(int i=0;i<sizes;i++){
         for(int j=0;j<sizes;j++){
             puzz[i][j]=alp++;
@@ -77,7 +45,7 @@ void makepuzzle(){
 
 
 void moverandom(){
-    for(int i=0;i<60;i++){
+    for(int i=0;i<100;i++){
         int m=(rand()%(4))+1;
         move(m);
     }
@@ -90,13 +58,13 @@ void init(){
 }
 
 int gamecheck(){
-    char ch='a';
+    char ch='A';
     for(int i=0,k=1;i<sizes;i++){
         for(int j=0;j<sizes;j++){
             k++;
             if(puzz[i][j]==ch){
                 ch++;
-                if(k==16){
+                if(k==(sizes*sizes)){
                     ch=' ';
                 }
             }else{
@@ -104,6 +72,7 @@ int gamecheck(){
             }
         }
     }
+    printscrn();
     return 1;
 }
 
@@ -111,8 +80,7 @@ void move(int dir){
     char temp=0;
     switch (dir)
     {
-    case 2/* constant-expression */:
-        /* code */
+    case 2:
         if((ptr->y)-1 <0){return;}
         temp=puzz[(ptr->y)-1][ptr->x];
         puzz[(ptr->y)-1][ptr->x]=puzz[ptr->y][ptr->x];
@@ -151,7 +119,7 @@ int tomove(){
     if(kbhit()){
         switch (_getch())
         {
-        case 72/* constant-expression */:
+        case 72:
             move(FORWARD);
             break;
         case 80:
@@ -170,19 +138,18 @@ int tomove(){
     }else{
         return 0;
     }
-    printscrn();
     return 1;
 }
 
 void printscrn(){
     system("cls");
-    printf("\n  ****************\n");
+    printf("\n  *************************\n");
     for(int i=0;i<sizes;i++){
         for(int j=0;j<sizes;j++){
             printf("    %c ",puzz[i][j]);
         }
         printf("\n");
     }
-    printf("\n  ****************\n");
+    printf("\n  *************************\n");
     return;
 }
