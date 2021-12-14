@@ -1,6 +1,16 @@
-#include "puzzlesup.h"
+#include "puzzsup.h"
 
 int main(){ 
+    printf("Enter your squire puzzles size: N By N :\n");
+    printf("Minimum 2. Maximum is 5.\n");
+    fflush(stdin);
+    scanf("%d",&sizes);
+    if(sizes<2 || sizes>5){
+        printf("Invalid option. Press any key.");
+        getch();
+        return 0;
+    }
+    makepuzzle();
     init();
     int j=1;
     moverandom();
@@ -9,18 +19,34 @@ int main(){
         printscrn();
         j=tomove();
         if(gamecheck()){
-            printf("\n You Won ");
+            printf("\n YOU WON \n");
+            printf("Enter any key twice to exit.");
             break;
         }
     }
     getch();
     getch();
+    getch();
     return 0; 
 }
 
+void makepuzzle(){
+    char alp='A';
+    for(int i=0;i<sizes;i++){
+        for(int j=0;j<sizes;j++){
+            puzz[i][j]=alp++;
+        }
+    }
+    puzz[sizes-1][sizes-1]=' ';
+    ptr->x=sizes-1;
+    ptr->y=sizes-1;
+    return;
+}
+
+
 void moverandom(){
-    for(int i=0;i<(60);i++){
-        int m=(rand()%4)+1;
+    for(int i=0;i<100;i++){
+        int m=(rand()%(4))+1;
         move(m);
     }
     return;
@@ -32,16 +58,21 @@ void init(){
 }
 
 int gamecheck(){
-    char ch='1';
-    for(int i=0;i<NXN && ch<'9';i++){
-        for(int j=0;j<NXN && ch<'9';j++){
+    char ch='A';
+    for(int i=0,k=1;i<sizes;i++){
+        for(int j=0;j<sizes;j++){
+            k++;
             if(puzz[i][j]==ch){
                 ch++;
+                if(k==(sizes*sizes)){
+                    ch=' ';
+                }
             }else{
                 return 0;
             }
         }
     }
+    printscrn();
     return 1;
 }
 
@@ -57,7 +88,7 @@ void move(int dir){
         ptr->y-=1;
         break;
     case 1 :
-        if((ptr->y)+1 >2){return;}
+        if((ptr->y)+1 >sizes-1){return;}
         temp=puzz[ptr->y+1][ptr->x];
         puzz[(ptr->y)+1][ptr->x]=puzz[ptr->y][ptr->x];
         puzz[ptr->y][ptr->x]=temp;
@@ -71,7 +102,7 @@ void move(int dir){
         ptr->x-=1;
         break;
     case 3:
-        if((ptr->x)+1 >2){return;}
+        if((ptr->x)+1 >sizes-1){return;}
         temp=puzz[ptr->y][(ptr->x)+1];
         puzz[ptr->y][(ptr->x)+1]=puzz[ptr->y][ptr->x];
         puzz[ptr->y][ptr->x]=temp;
@@ -107,19 +138,18 @@ int tomove(){
     }else{
         return 0;
     }
-    printscrn();
     return 1;
 }
 
 void printscrn(){
     system("cls");
-    printf("\n  ****************\n");
-    for(int i=0;i<NXN;i++){
-        for(int j=0;j<NXN;j++){
+    printf("\n  *************************\n");
+    for(int i=0;i<sizes;i++){
+        for(int j=0;j<sizes;j++){
             printf("    %c ",puzz[i][j]);
         }
         printf("\n");
     }
-    printf("\n  ****************\n");
+    printf("\n  *************************\n");
     return;
 }
