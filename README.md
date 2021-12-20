@@ -12,4 +12,7 @@ Some future improvement can be:
 - Making code shorter and faster.
 - Some sounds while playing would be nice.
 - Adding stop watch and highscore record.
+-
 
+
+NOTE: The other branch has the program for linux user.
