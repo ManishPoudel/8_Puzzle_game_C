@@ -3,7 +3,7 @@
 Sliding puzzle game.
 
 
-Just run it with gcc(mingw 64) compiler in vscode or any other.
+Type make in terminal and then type make run to run the program.
 
 Some future improvement can be:
 
