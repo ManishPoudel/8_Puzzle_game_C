@@ -23,15 +23,9 @@ int main(){
         j=tomove();
         if(gamecheck()){
             printf("\n YOU WON \n");
-            printf("Enter any key twice to exit.");
-            disableRawMode();
             break;
         }
     }
-    disableRawMode();
-    getchar();
-    getchar();
-    getchar();
     return 0; 
 }
 
@@ -142,6 +136,7 @@ int tomove(){
             return 0;
             break;
         }
+    return 1;
 }
 
 void printscrn(){
