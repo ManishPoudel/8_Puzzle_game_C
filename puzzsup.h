@@ -1,6 +1,8 @@
 #include<stdio.h>
-#include<conio.h>
-#include<stdlib.h>
+#include <ctype.h>
+#include <stdlib.h>
+#include <termios.h>
+#include <unistd.h>
 #include<time.h>
 #define FORWARD 1   //With reference to character.
 #define BACKWARD 2  //Not with respect to space.
@@ -8,7 +10,7 @@
 #define RIGHT 4
 #define MAX 5
 
-int sizes=0;
+
 
 struct position{
     int x;
@@ -16,8 +18,12 @@ struct position{
 };
 
 struct position space;
-struct position *ptr=&space;
+
 char puzz[MAX][MAX];
+
+void disableRawMode();
+void enableRawMode();
+char readkeys();
 
 void printscrn();
 int tomove();

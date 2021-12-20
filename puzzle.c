@@ -1,13 +1,16 @@
 #include "puzzsup.h"
 
+int siyu=0;
+struct position *ptrptr1=&space;
+
 int main(){ 
     printf("Enter your squire puzzles size: N By N :\n");
     printf("Minimum 2. Maximum is 5.\n");
     fflush(stdin);
-    scanf("%d",&sizes);
-    if(sizes<2 || sizes>5){
+    scanf("%d",&siyu);
+    if(siyu<2 || siyu>5){
         printf("Invalid option. Press any key.");
-        getch();
+        getchar();
         return 0;
     }
     makepuzzle();
@@ -21,25 +24,27 @@ int main(){
         if(gamecheck()){
             printf("\n YOU WON \n");
             printf("Enter any key twice to exit.");
+            disableRawMode();
             break;
         }
     }
-    getch();
-    getch();
-    getch();
+    disableRawMode();
+    getchar();
+    getchar();
+    getchar();
     return 0; 
 }
 
 void makepuzzle(){
     char alp='A';
-    for(int i=0;i<sizes;i++){
-        for(int j=0;j<sizes;j++){
+    for(int i=0;i<siyu;i++){
+        for(int j=0;j<siyu;j++){
             puzz[i][j]=alp++;
         }
     }
-    puzz[sizes-1][sizes-1]=' ';
-    ptr->x=sizes-1;
-    ptr->y=sizes-1;
+    puzz[siyu-1][siyu-1]=' ';
+    ptrptr1->x=siyu-1;
+    ptrptr1->y=siyu-1;
     return;
 }
 
@@ -59,12 +64,12 @@ void init(){
 
 int gamecheck(){
     char ch='A';
-    for(int i=0,k=1;i<sizes;i++){
-        for(int j=0;j<sizes;j++){
+    for(int i=0,k=1;i<siyu;i++){
+        for(int j=0;j<siyu;j++){
             k++;
             if(puzz[i][j]==ch){
                 ch++;
-                if(k==(sizes*sizes)){
+                if(k==(siyu*siyu)){
                     ch=' ';
                 }
             }else{
@@ -81,71 +86,70 @@ void move(int dir){
     switch (dir)
     {
     case 2:
-        if((ptr->y)-1 <0){return;}
-        temp=puzz[(ptr->y)-1][ptr->x];
-        puzz[(ptr->y)-1][ptr->x]=puzz[ptr->y][ptr->x];
-        puzz[ptr->y][ptr->x]=temp;
-        ptr->y-=1;
+        if((ptrptr1->y)-1 <0){return;}
+        temp=puzz[(ptrptr1->y)-1][ptrptr1->x];
+        puzz[(ptrptr1->y)-1][ptrptr1->x]=puzz[ptrptr1->y][ptrptr1->x];
+        puzz[ptrptr1->y][ptrptr1->x]=temp;
+        ptrptr1->y-=1;
         break;
     case 1 :
-        if((ptr->y)+1 >sizes-1){return;}
-        temp=puzz[ptr->y+1][ptr->x];
-        puzz[(ptr->y)+1][ptr->x]=puzz[ptr->y][ptr->x];
-        puzz[ptr->y][ptr->x]=temp;
-        ptr->y+=1;
+        if((ptrptr1->y)+1 >siyu-1){return;}
+        temp=puzz[ptrptr1->y+1][ptrptr1->x];
+        puzz[(ptrptr1->y)+1][ptrptr1->x]=puzz[ptrptr1->y][ptrptr1->x];
+        puzz[ptrptr1->y][ptrptr1->x]=temp;
+        ptrptr1->y+=1;
         break;
     case 4:
-        if((ptr->x)-1 <0){return;}
-        temp=puzz[ptr->y][(ptr->x)-1];
-        puzz[ptr->y][(ptr->x)-1]=puzz[ptr->y][ptr->x];
-        puzz[ptr->y][ptr->x]=temp;
-        ptr->x-=1;
+        if((ptrptr1->x)-1 <0){return;}
+        temp=puzz[ptrptr1->y][(ptrptr1->x)-1];
+        puzz[ptrptr1->y][(ptrptr1->x)-1]=puzz[ptrptr1->y][ptrptr1->x];
+        puzz[ptrptr1->y][ptrptr1->x]=temp;
+        ptrptr1->x-=1;
         break;
     case 3:
-        if((ptr->x)+1 >sizes-1){return;}
-        temp=puzz[ptr->y][(ptr->x)+1];
-        puzz[ptr->y][(ptr->x)+1]=puzz[ptr->y][ptr->x];
-        puzz[ptr->y][ptr->x]=temp;
-        ptr->x+=1;
+        if((ptrptr1->x)+1 >siyu-1){return;}
+        temp=puzz[ptrptr1->y][(ptrptr1->x)+1];
+        puzz[ptrptr1->y][(ptrptr1->x)+1]=puzz[ptrptr1->y][ptrptr1->x];
+        puzz[ptrptr1->y][ptrptr1->x]=temp;
+        ptrptr1->x+=1;
     default:
         break;
     }
+    printscrn();
     return;
 }
 
 int tomove(){
+    enableRawMode();
     char ch;
-    ch=_getch();
-    if(kbhit()){
-        switch (_getch())
+    ch=readkeys();
+    printf("%c",ch);
+        switch (ch)
         {
-        case 72:
+        case 'A':
             move(FORWARD);
             break;
-        case 80:
+        case 'B':
             move(BACKWARD);
             break;
-        case 75:
+        case 'D':
             move(LEFT);
             break;
-        case 77:
+        case 'C':
             move(RIGHT);
             break;
-        default:
+        case 'q':
             return 0;
             break;
         }
-    }else{
-        return 0;
-    }
-    return 1;
 }
 
 void printscrn(){
-    system("cls");
+    system("clear");
+    printf("Press q to exit\n");
     printf("\n  *************************\n");
-    for(int i=0;i<sizes;i++){
-        for(int j=0;j<sizes;j++){
+    for(int i=0;i<siyu;i++){
+        for(int j=0;j<siyu;j++){
             printf("    %c ",puzz[i][j]);
         }
         printf("\n");
