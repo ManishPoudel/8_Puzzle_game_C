@@ -35,23 +35,3 @@ char readkeys(){
   }
   }
 }
-
-
-/* int initialize() {
-  enableRawMode();
-
-    /* switch (c)
-    {
-    case 'w':
-      printf("entered w\n");
-      break;
-    case 's':
-      printf("entered s\n");
-    break;
-    default:
-      break;
-    } 
-    */
-
-//   return 0;
-// } */
