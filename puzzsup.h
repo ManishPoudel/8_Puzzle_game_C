@@ -4,6 +4,7 @@
 #include <termios.h>
 #include <unistd.h>
 #include<time.h>
+
 #define FORWARD 1   //With reference to character.
 #define BACKWARD 2  //Not with respect to space.
 #define LEFT 3
@@ -17,20 +18,22 @@ struct position{
     int y;
 };
 
-struct position space;
+static struct position space;
+static char board[MAX][MAX];
 
-char puzz[MAX][MAX];
-
+// For taking input from keyboard.
 void disableRawMode();
 void enableRawMode();
 char readkeys();
 
-void printscrn();
-int tomove();
+void suffelBoard();
+void setBoard();
+void printScrn();
+int toMove();
 void move(int dir);
-int swap(int y,int x,int y2,int x2);
+int swap(int y, int x, int y2, int x2);
 int suffel(struct position space);
-int gamecheck();
-void init();
-void moverandom();
-void makepuzzle();
+int gameCheck();
+void initRandom();
+void moveRandom();
+void makePuzzle();

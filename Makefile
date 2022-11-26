@@ -1,5 +1,5 @@
 all:
-	gcc puzzle.c puzzsup.c -o main
+	gcc puzzle.c puzzsup.c -o build/main
 
 run:
-	./main
+	./build/main

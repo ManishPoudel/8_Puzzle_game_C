@@ -1,1 +1,9 @@
-*.exe
+
+# Ignore build folder.
+build/
+
+# Ignore log folder.
+notes/
+
+# ignore .vscode file.
+.vscode/
